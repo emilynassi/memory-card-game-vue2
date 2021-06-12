@@ -1,0 +1,23 @@
+//Variables
+
+$bright-pink: #ff7171;
+$light-pink: #f5c0c0;
+$beige: #f0e4d7;
+$blue: #9fd8df;
+
+html {
+	line-height: 1.15; /* 1 */
+	-webkit-text-size-adjust: 100%; /* 2 */
+}
+
+body {
+	margin: 0;
+	background: $beige;
+	font-family: Avenir, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	margin: 0;
+}
+main {
+	display: block;
+}
