@@ -1,5 +1,5 @@
 <template>
-	<div class="component c-card" @click="flip(card.id, card.value)">
+	<div class="component c-card" @click="flip(card.id, card.value, card)">
 		<div class="c-card__inner">
 			<div class="c-card__inner-front"></div>
 			<div class="c-card__inner-back">
@@ -49,7 +49,7 @@ export default {
 			border-radius: 4px;
 		}
 		&-front {
-			background-color: #ff7171;
+			background-color: $bright-pink;
 		}
 		&-back {
 			-ms-transform: rotateY(-180deg);
@@ -70,10 +70,13 @@ export default {
 				transform: rotateY(180deg);
 			}
 			&-back {
-				background-color: #f5c0c0;
+				background-color: $light-pink;
 				transform: rotateY(0deg);
 			}
 		}
+	}
+	&.is-matched {
+		opacity: 0;
 	}
 }
 </style>

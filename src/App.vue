@@ -1,12 +1,18 @@
 <template>
 	<div id="app">
 		<main-header />
-		<section class="s-card-container">
+		<section
+			class="s-card-container"
+			:class="{ 'pointer-none': activeMatchValue }"
+		>
 			<card
 				v-for="card in cards"
 				:key="card.id"
 				:card="card"
-				:class="{ 'is-flipped': card.isFlipped }"
+				:class="{
+					'is-flipped': card.isFlipped,
+					'is-matched': card.isMatched,
+				}"
 				:flip="flipCard"
 			/>
 		</section>
@@ -49,18 +55,25 @@ export default {
 			{ emoji: '⛵️', value: 'sailboat' },
 		],
 		cards: [],
+		activeMatchArray: [],
 		activeMatchValue: null,
 	}),
 	created() {
 		this.setCards();
 	},
 	methods: {
-		flipCard(id, value) {
+		flipCard(id, value, card) {
 			this.cards = this.cards.map((card) => ({
 				...card,
 				isFlipped: card.id === id ? true : card.isFlipped,
 			}));
-			// card.isFlipped = !card.isFlipped;
+			if (this.activeMatchArray.length < 2) {
+				this.activeMatchArray.push({ id, value });
+			}
+			if (this.activeMatchArray.length === 2) {
+				this.activeMatchValue = true;
+				this.checkMatch(value);
+			}
 		},
 		setCards() {
 			this.cards = [...this.defaultCards, ...this.defaultCards]
@@ -72,27 +85,42 @@ export default {
 					isMatched: false,
 				}));
 		},
+		checkMatch(value) {
+			if (this.activeMatchArray[0].value === this.activeMatchArray[1].value) {
+				window.setTimeout(() => {
+					this.cards = this.cards.map((card) => ({
+						...card,
+						isMatched: value === card.value ? true : card.isMatched,
+					}));
+				}, 3000);
+				this.activeMatchArray = [];
+				this.activeMatchValue = false;
+			} else {
+				this.cards.forEach((card) => {
+					this.activeMatchArray = [];
+					window.setTimeout(() => {
+						card.isFlipped = false;
+						this.activeMatchValue = false;
+					}, 3000);
+				});
+			}
+		},
 	},
 };
 </script>
 
 <style lang="scss">
-@import '@/assets/global.scss';
-
 .s-card-container {
-	max-width: 1000px;
+	max-width: 1280px;
 	display: grid;
-	grid-template-columns: repeat(8, 1fr);
+	grid-template-columns: repeat(8, minmax(min-content, 1fr));
+	grid-auto-flow: dense;
 	grid-gap: 12px;
 	justify-items: center;
-
-	//   max-width: 1000px;
-	// display: grid;
-	// grid-template-columns: repeat(8, minmax(min-content, 1fr));
-	// grid-auto-flow: dense;
-	// grid-gap: 12px;
-	// justify-items: center;
-	// grid-auto-rows: minmax(100px, 1fr);
-	// margin: 0 auto;
+	grid-auto-rows: minmax(100px, 1fr);
+	margin: 0 auto;
+}
+.pointer-none {
+	pointer-events: none;
 }
 </style>

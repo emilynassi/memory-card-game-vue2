@@ -10,7 +10,7 @@ export default {
 
 <style lang="scss" scoped>
 .c-header {
-	background-color: #9fd8df;
+	background-color: $blue;
 	height: 80px;
 }
 </style>
