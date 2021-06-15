@@ -5,6 +5,7 @@
 			:moves="numberofMoves"
 			:reset="resetDeck"
 		/>
+		{{ minutes }}:{{ seconds }}
 		<section
 			class="s-card-container"
 			:class="{ 'pointer-none': activeMatchValue }"
@@ -55,12 +56,31 @@ export default {
 		numberofMatches: 0,
 		numberofMoves: 0,
 		gameClock: null,
+		timer: {
+			minutes: 0,
+			seconds: 0,
+		},
 	}),
+	computed: {
+		seconds() {
+			return this.timer.seconds < 10
+				? `0${this.timer.seconds}`
+				: this.timer.seconds;
+		},
+		minutes() {
+			return this.timer.minutes < 10
+				? `0${this.timer.minutes}`
+				: this.timer.minutes;
+		},
+	},
 	created() {
 		this.setCards();
 	},
 	methods: {
 		flipCard(id, value, card) {
+			if (!this.gameClock) {
+				this.startGameClock();
+			}
 			this.cards = this.cards.map((card) => ({
 				...card,
 				isFlipped: card.id === id ? true : card.isFlipped,
@@ -105,14 +125,35 @@ export default {
 				});
 			}
 		},
+		startGameClock() {
+			let countDownDate = new Date();
+			this.gameClock = setInterval(() => {
+				let now = new Date().getTime();
+				let distance = now - countDownDate.getTime();
+				var hours = Math.floor(
+					(distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+				);
+				this.timer.minutes = Math.floor(
+					(distance % (1000 * 60 * 60)) / (1000 * 60),
+				);
+				this.timer.seconds = Math.floor((distance % (1000 * 60)) / 1000);
+			}, 1000);
+		},
+		clearGameClock() {
+			clearInterval(this.gameClock);
+			this.gameClock = null;
+			this.timer.seconds = 0;
+			this.timer.minutes = 0;
+		},
 		resetDeck() {
 			//reset card deck
 			this.setCards();
 			//clear out any remaing values
 			this.numberofMoves = 0;
 			this.numberofMatches = 0;
-			this.activeMatchValue = false;
-			this.activeMatchArray = false;
+			this.activeMatchValue = null;
+			this.activeMatchArray = [];
+			this.clearGameClock();
 		},
 	},
 };
