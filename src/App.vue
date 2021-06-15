@@ -1,6 +1,10 @@
 <template>
 	<div id="app">
-		<main-header />
+		<main-header
+			:matches="numberofMatches"
+			:moves="numberofMoves"
+			:reset="resetDeck"
+		/>
 		<section
 			class="s-card-container"
 			:class="{ 'pointer-none': activeMatchValue }"
@@ -32,18 +36,9 @@ export default {
 	},
 	data: () => ({
 		defaultCards: [
-			{
-				emoji: '🍹',
-				value: 'drink',
-			},
-			{
-				emoji: '🌴',
-				value: 'palm',
-			},
-			{
-				emoji: '🏄‍♂️',
-				value: 'green surfer',
-			},
+			{ emoji: '🍹', value: 'drink' },
+			{ emoji: '🌴', value: 'palm' },
+			{ emoji: '🏄‍♂️', value: 'green surfer' },
 			{ emoji: '🐠', value: 'fish' },
 			{ emoji: '🩴', value: 'flip flop' },
 			{ emoji: '🌊', value: 'wave' },
@@ -57,6 +52,9 @@ export default {
 		cards: [],
 		activeMatchArray: [],
 		activeMatchValue: null,
+		numberofMatches: 0,
+		numberofMoves: 0,
+		gameClock: null,
 	}),
 	created() {
 		this.setCards();
@@ -86,13 +84,15 @@ export default {
 				}));
 		},
 		checkMatch(value) {
+			this.numberofMoves += 1;
 			if (this.activeMatchArray[0].value === this.activeMatchArray[1].value) {
 				window.setTimeout(() => {
 					this.cards = this.cards.map((card) => ({
 						...card,
 						isMatched: value === card.value ? true : card.isMatched,
 					}));
-				}, 3000);
+				}, 1500);
+				this.numberofMatches += 1;
 				this.activeMatchArray = [];
 				this.activeMatchValue = false;
 			} else {
@@ -101,9 +101,18 @@ export default {
 					window.setTimeout(() => {
 						card.isFlipped = false;
 						this.activeMatchValue = false;
-					}, 3000);
+					}, 1500);
 				});
 			}
+		},
+		resetDeck() {
+			//reset card deck
+			this.setCards();
+			//clear out any remaing values
+			this.numberofMoves = 0;
+			this.numberofMatches = 0;
+			this.activeMatchValue = false;
+			this.activeMatchArray = false;
 		},
 	},
 };

@@ -30,6 +30,7 @@ export default {
 	width: 125px;
 	height: 125px;
 	cursor: pointer;
+	transition: 0.5s;
 
 	&__inner {
 		height: 100%;
