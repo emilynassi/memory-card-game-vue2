@@ -3,9 +3,9 @@
 		<main-header
 			:matches="numberofMatches"
 			:moves="numberofMoves"
+			:timer="timer"
 			:reset="resetDeck"
 		/>
-		{{ minutes }}:{{ seconds }}
 		<section
 			class="s-card-container"
 			:class="{ 'pointer-none': activeMatchValue }"
@@ -61,18 +61,6 @@ export default {
 			seconds: 0,
 		},
 	}),
-	computed: {
-		seconds() {
-			return this.timer.seconds < 10
-				? `0${this.timer.seconds}`
-				: this.timer.seconds;
-		},
-		minutes() {
-			return this.timer.minutes < 10
-				? `0${this.timer.minutes}`
-				: this.timer.minutes;
-		},
-	},
 	created() {
 		this.setCards();
 	},
@@ -130,9 +118,6 @@ export default {
 			this.gameClock = setInterval(() => {
 				let now = new Date().getTime();
 				let distance = now - countDownDate.getTime();
-				var hours = Math.floor(
-					(distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-				);
 				this.timer.minutes = Math.floor(
 					(distance % (1000 * 60 * 60)) / (1000 * 60),
 				);
@@ -163,14 +148,21 @@ export default {
 .s-card-container {
 	max-width: 1280px;
 	display: grid;
-	grid-template-columns: repeat(8, minmax(min-content, 1fr));
+	justify-content: center;
+	grid-template-columns: repeat(8, minmax(min-content, 125px));
 	grid-auto-flow: dense;
 	grid-gap: 12px;
 	justify-items: center;
-	grid-auto-rows: minmax(100px, 1fr);
-	margin: 0 auto;
+	grid-auto-rows: minmax(min-content, 1fr);
+	margin: 32px auto 0;
 }
 .pointer-none {
 	pointer-events: none;
+}
+
+@media screen and (max-width: 1117px) {
+	.s-card-container {
+		grid-template-columns: repeat(4, minmax(min-content, 75px));
+	}
 }
 </style>

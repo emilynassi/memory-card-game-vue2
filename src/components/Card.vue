@@ -79,5 +79,17 @@ export default {
 	&.is-matched {
 		opacity: 0;
 	}
+
+	@media screen and (max-width: 767px) {
+		height: 75px;
+		width: 75px;
+		&__inner {
+			&-back {
+				span {
+					font-size: 3rem;
+				}
+			}
+		}
+	}
 }
 </style>
