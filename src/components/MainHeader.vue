@@ -58,6 +58,7 @@ export default {
 		margin: 0 0 0 auto;
 		display: flex;
 		align-items: center;
+		font-family: $Pacifico;
 		&-img {
 			height: 80px;
 			width: 80px;
