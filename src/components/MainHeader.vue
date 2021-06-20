@@ -10,15 +10,9 @@
 				Match Game
 			</h1>
 
-			<div class="c-header__stats">
-				<div>Number of Moves: {{ moves }}</div>
-				<div class="divider">|</div>
-				<div>Number of Matches: {{ matches }}</div>
-				<div class="divider">|</div>
-
-				<div>Clock: {{ minutes }}:{{ seconds }}</div>
-			</div>
-			<button class="btn btn-primary" @click="reset">Reset</button>
+			<button class="btn btn-primary c-header__reset" @click="reset">
+				Reset
+			</button>
 		</div>
 	</header>
 </template>
@@ -27,18 +21,6 @@
 export default {
 	name: 'MainHeader',
 	props: {
-		moves: {
-			type: Number,
-			default: 0,
-		},
-		matches: {
-			type: Number,
-			default: 0,
-		},
-		timer: {
-			type: Object,
-			default: null,
-		},
 		reset: {
 			type: Function,
 			required: true,
@@ -66,13 +48,14 @@ export default {
 	&__inner {
 		max-width: 1280px;
 		margin: 0 auto;
+		padding: 0 12px;
 		height: 100%;
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 		align-items: center;
 	}
 	&__title {
-		margin: 0;
+		margin: 0 0 0 auto;
 		display: flex;
 		align-items: center;
 		&-img {
@@ -81,14 +64,8 @@ export default {
 			margin-right: 12px;
 		}
 	}
-	&__stats {
-		display: flex;
-		justify-content: space-evenly;
-		align-items: center;
-		div.divider {
-			margin: 0 6px;
-			font-weight: 900;
-		}
+	&__reset {
+		margin-left: auto;
 	}
 }
 </style>

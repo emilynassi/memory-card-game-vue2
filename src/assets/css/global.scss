@@ -6,6 +6,7 @@ $bright-pink: #ff7171;
 $light-pink: #f5c0c0;
 $beige: #f0e4d7;
 $blue: #9fd8df;
+$white: #ffffff;
 
 html {
 	line-height: 1.15; /* 1 */
@@ -34,9 +35,13 @@ main {
 	outline: inherit;
 	padding: 12px 24px;
 	border-radius: 4px;
+	color: $white;
+	font-weight: 700;
+	transition: 0.25s;
 	&-primary {
 		background: $bright-pink;
 		&:hover {
+			filter: brightness(115%);
 		}
 	}
 }
