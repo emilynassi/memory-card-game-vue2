@@ -17,7 +17,7 @@ export default {
 			type: Number,
 			default: 0,
 		},
-		numberOfMatches: {
+		matches: {
 			type: Number,
 			default: 0,
 		},
