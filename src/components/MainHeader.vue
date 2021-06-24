@@ -26,25 +26,13 @@ export default {
 			required: true,
 		},
 	},
-	computed: {
-		seconds() {
-			return this.timer.seconds < 10
-				? `0${this.timer.seconds}`
-				: this.timer.seconds;
-		},
-		minutes() {
-			return this.timer.minutes < 10
-				? `0${this.timer.minutes}`
-				: this.timer.minutes;
-		},
-	},
 };
 </script>
 
 <style lang="scss" scoped>
 .c-header {
-	background-color: $blue;
 	height: 80px;
+	margin-top: 24px;
 	&__inner {
 		max-width: 1280px;
 		margin: 0 auto;

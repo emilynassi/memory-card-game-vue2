@@ -1,10 +1,10 @@
 /*----Variables---*/
 
 //Colors
-$bright-pink: #ff7171;
-$light-pink: #f5c0c0;
+$bright-pink: #ec5064;
+$light-pink: #ffaab0;
 $beige: #f0e4d7;
-$blue: #9fd8df;
+$blue: #03919b;
 $white: #ffffff;
 
 //Fonts
@@ -41,9 +41,9 @@ main {
 	font-weight: 700;
 	transition: 0.25s;
 	&-primary {
-		background: $bright-pink;
+		background: $blue;
 		&:hover {
-			filter: brightness(115%);
+			filter: brightness(110%);
 		}
 	}
 }
